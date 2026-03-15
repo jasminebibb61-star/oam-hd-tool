@@ -813,11 +813,11 @@ const TYPE_REPORTS = {
 
 // ── FORMAT BIRTHDATE for API: DD-Mon-YY ──
 function formatBirthdate(dateStr) {
-  const d = new Date(dateStr);
+  const parts = dateStr.split('-');
   const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-  const day = String(d.getDate()).padStart(2,'0');
+  const day = parts[2].padStart(2,'0');
   const mon = months[d.getMonth()];
-  const yr  = String(d.getFullYear()).slice(-2);
+  const yr  = parts[0].slice(-2);
   return `${day}-${mon}-${yr}`;
 }
 
