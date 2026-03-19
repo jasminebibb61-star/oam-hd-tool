@@ -646,6 +646,10 @@
         <label>Birth City / State</label>
         <input type="text" id="birthCity" placeholder="e.g. Atlanta, Georgia" />
       </div>
+      <div class="form-group full">
+        <label>Email Address</label>
+        <input type="email" id="formEmail" placeholder="your@email.com" />
+      </div>
     </div>
 
     <button class="submit-btn" id="calculateBtn" onclick="calculateDesign()">
@@ -919,11 +923,13 @@ function showResult(name, data) {
       <div class="result-card-desc">${report.authority_desc}</div>
     </div>
     <div class="result-card">
-      <div class="result-card-label">${report.profile_label} — ${profile}</div>
+      <div class="result-card-label">${report.profile_label}</div>
+      <div class="result-card-value">${profile}</div>
       <div class="result-card-desc">${profileDesc}</div>
     </div>
     <div class="result-card">
-      <div class="result-card-label">How your energy works — ${definition}</div>
+      <div class="result-card-label">How your energy works</div>
+      <div class="result-card-value">${definition}</div>
       <div class="result-card-desc">${typeName === 'Reflector' ? 'You have no consistently defined energy centers — which means you absorb and amplify the energy of everyone around you. Your environment isn\'t a backdrop. For you, it\'s everything. In a room full of anxious people you feel anxious. Around someone grounded and clear, you feel that too. This isn\'t weakness. It\'s how you\'re designed to work — and knowing it changes how you choose where and with whom you spend your time.' : typeName === 'Projector' ? 'You have separate energy areas that aren\'t directly connected. Around certain people something clicks into place — you feel clear, whole, like yourself. Around others you feel scattered or incomplete. That\'s not mood. That\'s your design telling you something about your environment. Learning to pay attention to that feeling is one of the most powerful things you can do.' : 'Your energy is consistent and sustainable — but only when it\'s pointed at things that genuinely engage you. When you\'re doing work that lights you up, you can go long and hard without burning out. When you\'re running on obligation, that same energy turns into exhaustion fast. The key isn\'t managing your energy. It\'s being honest about what truly engages it.'}</div>
     </div>
     <div class="result-card">
