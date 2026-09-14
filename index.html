@@ -5,6 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Discover Your Design · OAM Collective</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-H4CG3962VQ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-H4CG3962VQ');
+</script>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -445,37 +452,24 @@
 
   .result-cta p { font-size: 0.9rem; color: #5a6a60; line-height: 1.7; margin-bottom: 1.5rem; max-width: 400px; margin-left: auto; margin-right: auto; }
 
-  .email-row { display: flex; gap: 0.5rem; max-width: 440px; margin: 0 auto 0.75rem; }
-
-  .email-row input {
-    flex: 1;
-    padding: 0.9rem 1rem;
-    border: 1px solid var(--mist);
-    background: white;
-    font-family: var(--font-body);
-    font-size: 0.9rem;
-    outline: none;
-    transition: border-color 0.3s;
-  }
-
-  .email-row input:focus { border-color: var(--teal); }
-
-  .email-row button {
+  .email-cta {
+    display: inline-block;
     background: var(--teal);
     color: white;
-    border: none;
-    padding: 0 1.5rem;
+    padding: 0.95rem 1.65rem;
     font-family: var(--font-body);
     font-size: 0.75rem;
     font-weight: 500;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    cursor: pointer;
+    text-decoration: none;
     transition: background 0.3s;
     white-space: nowrap;
+    margin: 0 auto 0.9rem;
   }
 
-  .email-row button:hover { background: var(--deep-brown); }
+  .email-cta:hover,
+  .email-cta:focus-visible { background: var(--deep-brown); }
 
   .result-cta .fine-print { font-size: 0.68rem; color: #8a9a90; }
 
@@ -543,25 +537,11 @@
     0%, 100% { opacity: 1; } 50% { opacity: 0.5; }
   }
 
-  /* ── SUCCESS ── */
-  .success-msg {
-    display: none;
-    text-align: center;
-    padding: 1.5rem;
-    background: rgba(199,206,192,0.25);
-    border: 1px solid var(--sage);
-    color: var(--sage-dark);
-    font-size: 0.9rem;
-    line-height: 1.6;
-  }
-
   /* ── RESPONSIVE ── */
   @media (max-width: 700px) {
     .section-intro { grid-template-columns: 1fr; gap: 2.5rem; }
     .form-grid { grid-template-columns: 1fr; }
     .result-grid { grid-template-columns: 1fr; }
-    .email-row { flex-direction: column; }
-    .email-row button { padding: 0.9rem; }
   }
 </style>
 </head>
@@ -584,7 +564,7 @@
   <p class="hero-eyebrow">Human Design · Free Discovery Tool</p>
   <h1>You were never meant<br>to <em>run</em> on everyone<br>else's blueprint.</h1>
   <p class="hero-sub">Human Design is a system of self-knowledge that reveals how you're uniquely wired — how you make decisions, expend energy, and move through the world. It's not a personality test. It's the first real language for who you've always been — and a blueprint for who you're becoming.</p>
-  <button class="cta-primary" onclick="document.getElementById('intake').scrollIntoView({behavior:'smooth'})">Discover My Type</button>
+  <button class="cta-primary" onclick="trackEvent('hd_discover_click'); document.getElementById('intake').scrollIntoView({behavior:'smooth'})">Discover My Type</button>
   <div class="hero-deco">
     <span>Begin</span>
     <div class="hero-deco-line"></div>
@@ -618,19 +598,19 @@
 
     <div class="form-grid">
       <div class="form-group">
-        <label>First Name</label>
+        <label for="firstName">First Name</label>
         <input type="text" id="firstName" placeholder="Your name" />
       </div>
       <div class="form-group">
-        <label>Birth Date</label>
+        <label for="birthDate">Birth Date</label>
         <input type="date" id="birthDate" />
       </div>
       <div class="form-group">
-        <label>Birth Time</label>
+        <label for="birthTime">Birth Time</label>
         <input type="time" id="birthTime" />
       </div>
       <div class="form-group">
-        <label>Birth Country</label>
+        <label for="birthCountry">Birth Country</label>
         <select id="birthCountry">
           <option value="">Select country...</option>
           <option value="US">United States</option>
@@ -643,19 +623,15 @@
         </select>
       </div>
       <div class="form-group full">
-        <label>Birth City / State</label>
+        <label for="birthCity">Birth City / State</label>
         <input type="text" id="birthCity" placeholder="e.g. Atlanta, Georgia" />
-      </div>
-      <div class="form-group full">
-        <label>Email Address</label>
-        <input type="email" id="formEmail" placeholder="your@email.com" />
       </div>
     </div>
 
     <button class="submit-btn" id="calculateBtn" onclick="calculateDesign()">
       Show Me My Type →
     </button>
-    <p class="privacy-note">Your birth data is used only to calculate your chart and is never stored or shared.</p>
+    <p class="privacy-note">Your birth date, time, and location are sent to our chart-calculation providers to generate your result. The OAM Collective does not save them through this page. Your first name is used only to personalize what you see here.</p>
   </div>
 </section>
 
@@ -675,14 +651,8 @@
     <div class="result-cta">
       <h3>Stay connected to <em>The OAM Collective.</em></h3>
       <p>Join the community and stay in the loop — new content, resources, and conversations designed for the woman who's ready to design something different.</p>
-      <div class="email-row">
-        <input type="email" id="leadEmail" placeholder="your@email.com" />
-        <button onclick="submitLead()">Stay Connected</button>
-      </div>
-      <div class="success-msg" id="successMsg">
-        ✦ You're in. Welcome to The OAM Collective — we're glad you're here.
-      </div>
-      <p class="fine-print">Grounded, real-talk content from The OAM Collective. Unsubscribe anytime.</p>
+      <a class="email-cta" href="https://tally.so/r/44MAzY" target="_blank" rel="noopener" onclick="trackEvent('hd_email_signup_opened')">Stay Connected</a>
+      <p class="fine-print">Your email will be collected securely through Tally and used for OAM Collective updates. Unsubscribe anytime.</p>
     </div>
   </div>
 </section>
@@ -694,6 +664,12 @@
 </footer>
 
 <script>
+function trackEvent(eventName, parameters = {}) {
+  if (typeof gtag === 'function') {
+    gtag('event', eventName, parameters);
+  }
+}
+
 // ── TYPE DATA ──
 const HD_TYPES = {
   manifestor: {
@@ -863,6 +839,8 @@ async function calculateDesign() {
     return;
   }
 
+  trackEvent('hd_calculation_started');
+
   const overlay = document.getElementById('loadingOverlay');
   overlay.classList.add('active');
 
@@ -890,6 +868,7 @@ async function calculateDesign() {
 
   } catch (err) {
     overlay.classList.remove('active');
+    trackEvent('hd_calculation_error');
     alert('Something went wrong retrieving your chart. Please check your birth details and try again.');
     console.error(err);
   }
@@ -905,6 +884,8 @@ function showResult(name, data) {
 
   const report = TYPE_REPORTS[typeName] || TYPE_REPORTS['Generator'];
   const profileDesc = PROFILE_DESCRIPTIONS[profile] || "Your profile describes the specific role you're here to play and the story your life is designed to tell.";
+
+  trackEvent('hd_result_generated', { hd_type: typeName });
 
   document.getElementById('result').style.display = 'block';
   document.getElementById('resultGreeting').textContent = `${name}, you are a`;
@@ -952,17 +933,15 @@ function showResult(name, data) {
   `;
 }
 
-function submitLead() {
-  const email = document.getElementById('leadEmail').value;
-  if (!email || !email.includes('@')) {
-    alert('Please enter a valid email address.');
-    return;
-  }
-  // Here: connect to your email platform (ConvertKit, Mailchimp, etc.)
-  document.getElementById('successMsg').style.display = 'block';
-  document.getElementById('leadEmail').style.display = 'none';
-  document.querySelector('.email-row button').style.display = 'none';
-}
+let hasTrackedFormStart = false;
+document.querySelectorAll('#intake input, #intake select').forEach((field) => {
+  field.addEventListener('focus', () => {
+    if (!hasTrackedFormStart) {
+      trackEvent('hd_form_started');
+      hasTrackedFormStart = true;
+    }
+  }, { once: true });
+});
 
 // ── SCROLL ANIMATIONS ──
 const observer = new IntersectionObserver((entries) => {
